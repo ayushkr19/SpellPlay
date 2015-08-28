@@ -8,14 +8,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mobappclub.spellplay.events.CheckWordsFromAPIEvent;
+import com.mobappclub.spellplay.events.DisplayResultsEvent;
 import com.mobappclub.spellplay.events.ResultFetchedEvent;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import de.greenrobot.event.EventBus;
 
@@ -82,7 +96,7 @@ public class ScoreResultFragment extends BaseFragment {
         HttpUrl URL = new HttpUrl.Builder()
                 .scheme("https")
                 .host("montanaflynn-spellcheck.p.mashape.com")
-                .addPathSegment("cehck")
+                .addPathSegment("check")
                 .addQueryParameter("text", checkWordsFromAPIEvent.getWords()).build();
 
         Request request = new Request.Builder()
@@ -105,12 +119,59 @@ public class ScoreResultFragment extends BaseFragment {
 
     }
 
-    public void onEventMainThread(ResultFetchedEvent r) {
-        TextView result = (TextView) getActivity().findViewById(R.id.tv_result);
-        if(r.getError().equals(""))
-        result.setText("Success :" + r.getResult());
-        else result.setText("Error " + r.getError());
 
+    public void onEventBackgroundThread(ResultFetchedEvent r){
+
+        int numWrongWords = 0;
+        HashMap<String,Object> wrongWords = new HashMap<>();
+
+        JsonObject jsonObject = new JsonParser().parse(r.getResult()).getAsJsonObject();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Object o = gsonBuilder.create().fromJson(jsonObject, Object.class);
+        Log.d(TAG, o.toString());
+        Map m = (Map)o;
+        if(((Map) o).containsKey("corrections")){
+            Map<String, Object> corrections = (Map)m.get("corrections");
+            Log.d(TAG, "Size : " + corrections.size());
+            Log.d(TAG, corrections.toString());
+
+            numWrongWords = corrections.size();
+
+            /*Set<String> keySet = corrections.keySet();
+            for(String s: keySet){
+                wrongWords.add(s);
+            }*/
+            for(Map.Entry<String, Object> entry : corrections.entrySet()){
+                wrongWords.put(entry.getKey(), entry.getValue());
+            }
+
+            Log.d(TAG, wrongWords.toString());
+
+            EventBus.getDefault().post(new DisplayResultsEvent(numWrongWords, wrongWords));
+        }
+
+
+
+
+    }
+
+    public void onEventMainThread(DisplayResultsEvent d) {
+        TextView result = (TextView) getActivity().findViewById(R.id.tv_result);
+        /*if(d.getError().equals(""))
+        result.setText("Success :" + r.getResult());
+        else result.setText("Error " + r.getError());*/
+        int numWrongWords = d.getNumWrongWords();
+        String text = "You got " + numWrongWords + " words wrong!\n\n";
+
+        if(numWrongWords != 0){
+            text += "The words that you got wrong are : \n\n";
+
+            for(Map.Entry<String,Object> entry: d.getWrongWords().entrySet()){
+                text += (entry.getKey() + " : " + entry.getValue().toString() + "\n");
+            }
+        }
+
+        result.setText(text);
     }
 
 
