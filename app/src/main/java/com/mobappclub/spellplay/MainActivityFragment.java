@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.mobappclub.spellplay.events.CheckWordsFromAPIEvent;
 
 import java.nio.charset.CharacterCodingException;
+import java.util.Random;
 
 import de.greenrobot.event.EventBus;
 
@@ -62,6 +63,10 @@ public class MainActivityFragment extends BaseFragment {
         et_text.setEnabled(true);
         et_text.setText("");
 
+        int randomASCIICode = randInt(97, 122);
+        final char randomCharacter = (char) randomASCIICode;
+        button.setText("Enter words starting with " + randomCharacter);
+
         button.setEnabled(false);
         new CountDownTimer(30000,1000){
             @Override
@@ -73,18 +78,29 @@ public class MainActivityFragment extends BaseFragment {
             public void onFinish() {
                 tv_counter.setText("Game over.");
                 button.setEnabled(true);
+                button.setText("START");
                 et_text.setEnabled(false);
 
-                String text = et_text.getText().toString();
+                String text = et_text.getText().toString().toLowerCase();
                 String splitted[] = text.split("\n");
                 String textt = "";
                 for (String t:splitted){
                     textt = textt + " " + t;
                 }
-                EventBus.getDefault().post(new CheckWordsFromAPIEvent(textt));
+
+                EventBus.getDefault().post(new CheckWordsFromAPIEvent(textt, randomCharacter));
 
             }
         }.start();
+    }
+
+    private int randInt(int min, int max) {
+
+        Random rand = new Random();
+        // nextInt is normally exclusive of the top value,
+        // so add 1 to make it inclusive
+        return  rand.nextInt((max - min) + 1) + min;
+
     }
 
 
