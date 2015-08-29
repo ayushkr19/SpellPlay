@@ -7,14 +7,20 @@ public class ResultFetchedEvent {
 
     private String result;
     private String error;
+    private int numWordsInRawInput;
 
-    public ResultFetchedEvent(String result, String error) {
+    public ResultFetchedEvent(String result, String error, int numWordsInRawInput) {
         this.result = result;
         this.error = error;
+        this.numWordsInRawInput = numWordsInRawInput;
     }
 
-    public ResultFetchedEvent(String result) {
-        this.result = result;
+    public int getNumWordsInRawInput() {
+        return numWordsInRawInput;
+    }
+
+    public void setNumWordsInRawInput(int numWordsInRawInput) {
+        this.numWordsInRawInput = numWordsInRawInput;
     }
 
     public String getResult() {
