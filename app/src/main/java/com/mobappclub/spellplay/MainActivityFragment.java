@@ -81,10 +81,11 @@ public class MainActivityFragment extends BaseFragment {
                 button.setText("START");
                 et_text.setEnabled(false);
 
-                String text = et_text.getText().toString().toLowerCase();
+                String text = et_text.getText().toString().toLowerCase().trim();
                 String splitted[] = text.split("\n");
                 String textt = "";
                 for (String t:splitted){
+                    if(!t.isEmpty())
                     textt = textt + " " + t;
                 }
 

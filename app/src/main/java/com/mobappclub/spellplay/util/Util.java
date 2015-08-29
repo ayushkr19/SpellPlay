@@ -6,8 +6,8 @@ package com.mobappclub.spellplay.util;
 public class Util {
 
     public static int countNumWords(String words) {
-        String[] splitted = words.split(" ");
-        return splitted.length;
+        String[] splitted = words.split("\\W+");
+        return splitted.length - 1;
     }
 
     public static String stripInvalidWords(String text, char startLetter){
