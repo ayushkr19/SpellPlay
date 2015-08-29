@@ -52,7 +52,7 @@ public class HighScoreFragment extends BaseFragment {
 
         try {
             Response response  = client.newCall(request).execute();
-            EventBus.getDefault().post(new HighScoreFetchedEvent(response.body().toString()));
+            EventBus.getDefault().post(new HighScoreFetchedEvent(response.body().string()));
         } catch (IOException e) {
             //TODO: Fix Log Tag
             Log.e(TAG, e.getMessage());
