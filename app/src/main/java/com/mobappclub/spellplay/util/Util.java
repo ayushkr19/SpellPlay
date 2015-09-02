@@ -11,7 +11,7 @@ public class Util {
     }
 
     public static String stripInvalidWords(String text, char startLetter){
-        String[] splitted = text.split(" ");
+        String[] splitted = text.split("\\W+");
         StringBuilder stringBuilder = new StringBuilder();
 
         for(String s: splitted){
@@ -21,5 +21,16 @@ public class Util {
             }
         }
         return stringBuilder.toString();
+    }
+
+    public static int countInvalidWords(String text, char startLetter){
+        String[] splitted = text.split("\\W+");
+        int count = 0;
+        for(String s: splitted){
+            if(!s.isEmpty() && s.charAt(0) != startLetter){
+                count++;
+            }
+        }
+        return count;
     }
 }
