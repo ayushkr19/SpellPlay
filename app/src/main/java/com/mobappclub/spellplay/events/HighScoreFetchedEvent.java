@@ -1,20 +1,22 @@
 package com.mobappclub.spellplay.events;
 
+import com.mobappclub.spellplay.gson.HighScoreModel;
+
 /**
  * Created by ayush on 29/08/15.
  */
 public class HighScoreFetchedEvent {
-    String response;
+    HighScoreModel highScoreModel;
 
-    public HighScoreFetchedEvent(String response) {
-        this.response = response;
+    public HighScoreModel getHighScoreModel() {
+        return highScoreModel;
     }
 
-    public String getResponse() {
-        return response;
+    public void setHighScoreModel(HighScoreModel highScoreModel) {
+        this.highScoreModel = highScoreModel;
     }
 
-    public void setResponse(String response) {
-        this.response = response;
+    public HighScoreFetchedEvent(HighScoreModel highScoreModel) {
+        this.highScoreModel = highScoreModel;
     }
 }

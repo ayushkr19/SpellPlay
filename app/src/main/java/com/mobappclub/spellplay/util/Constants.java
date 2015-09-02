@@ -12,6 +12,7 @@ public class Constants {
     public static final String SERVER_URL = "http://45.55.133.118";
     public static final String APP = "spellplay";
     public static final String SCORES = "scores";
-    public static final String FETCH_HIGH_SCORES = SERVER_URL + SEP + APP + SEP + SCORES + SEP;
+    public static final String PORT = ":8010";
+    public static final String FETCH_HIGH_SCORES = SERVER_URL + PORT +  SEP + APP + SEP + SCORES + SEP;
 
 }

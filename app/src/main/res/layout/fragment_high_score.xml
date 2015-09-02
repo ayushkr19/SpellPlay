@@ -29,6 +29,9 @@
             <TextView
                 android:id="@+id/tv_high_scores"
                 android:layout_width="match_parent"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/md_purple_900"
                 android:layout_height="match_parent"
                 android:text="Fetching high scores..." />
         </LinearLayout>
