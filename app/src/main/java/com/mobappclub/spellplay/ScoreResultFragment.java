@@ -7,17 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mobappclub.spellplay.events.CheckWordsFromAPIEvent;
 import com.mobappclub.spellplay.events.DisplayResultsEvent;
+import com.mobappclub.spellplay.events.PostResultsEvent;
 import com.mobappclub.spellplay.events.ResultFetchedEvent;
 import com.mobappclub.spellplay.util.Constants;
 import com.mobappclub.spellplay.util.Util;
 import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
@@ -30,6 +34,8 @@ import de.greenrobot.event.EventBus;
 public class ScoreResultFragment extends BaseFragment {
 
     private static final String TAG = "ScoreResultFragment";
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
 
     public ScoreResultFragment() {
         // Required empty public constructor
@@ -100,6 +106,7 @@ public class ScoreResultFragment extends BaseFragment {
             Log.d(TAG, wrongWords.toString());
 
             EventBus.getDefault().post(new DisplayResultsEvent(numWrongWords, wrongWords, r.getNumWordsInRawInput(), r.getNumInvalidWords()));
+            EventBus.getDefault().post(new PostResultsEvent(r.getNumWordsInRawInput(), numWrongWords, r.getNumInvalidWords()));
         }
 
     }
@@ -119,6 +126,28 @@ public class ScoreResultFragment extends BaseFragment {
         }
 
         result.setText(text);
+    }
+
+    public void onEventBackgroundThread(PostResultsEvent p){
+
+        Gson gson = new Gson();
+        String json = gson.toJson(p);
+        Log.d(TAG, json);
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(Constants.POST_SCORES)
+                .post(body)
+                .build();
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            Log.d(TAG, "Status code for post scores : " + response.code());
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+
     }
 
 }
