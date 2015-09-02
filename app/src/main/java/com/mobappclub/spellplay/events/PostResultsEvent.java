@@ -1,5 +1,7 @@
 package com.mobappclub.spellplay.events;
 
+import com.mobappclub.spellplay.util.Util;
+
 /**
  * Created by ayush on 03/09/15.
  */
@@ -14,7 +16,7 @@ public class PostResultsEvent {
         this.total_words = total_words;
         this.num_wrong_words = num_wrong_words;
         this.num_incorrect_start_words = num_incorrect_start_words;
-        this.final_score = total_words - num_wrong_words - 3 * num_incorrect_start_words;
+        this.final_score = Util.calculateFinalScore(total_words,num_wrong_words,num_incorrect_start_words);
     }
 
     public int getTotal_words() {

@@ -33,4 +33,8 @@ public class Util {
         }
         return count;
     }
+
+    public static int calculateFinalScore(int totalWords, int numWrongWords, int numInvalidWords){
+        return totalWords * 10 - 2 * numWrongWords - 5 * numInvalidWords;
+    }
 }

@@ -115,7 +115,11 @@ public class ScoreResultFragment extends BaseFragment {
         TextView result = (TextView) getActivity().findViewById(R.id.tv_result);
 
         int numWrongWords = d.getNumWrongWords();
-        String text = "Out of the " + d.getNumWordsInRawInput() +  " words entered, you got " + numWrongWords + " words wrong!\n\n";
+        int numInvalidWords = d.getNumInvalidWords();
+        int totalWords = d.getNumWordsInRawInput();
+        String text = "Out of the " + totalWords +  " words entered, "
+                + numInvalidWords + " words are invalid & " + numWrongWords + " are wrong!\n\n";
+
 
         if(numWrongWords != 0){
             text += "The words that you got wrong are : \n\n";
@@ -125,6 +129,7 @@ public class ScoreResultFragment extends BaseFragment {
             }
         }
 
+        text += ("\n\n\n Your final score is : " + Util.calculateFinalScore(totalWords, numWrongWords, numInvalidWords));
         result.setText(text);
     }
 
