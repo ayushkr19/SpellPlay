@@ -10,11 +10,21 @@ public class DisplayResultsEvent {
     private int numWrongWords;
     private HashMap<String, Object> wrongWords;
     private int numWordsInRawInput;
+    private  int numInvalidWords;
 
-    public DisplayResultsEvent(int numWrongWords, HashMap<String, Object> wrongWords, int numWordsInRawInput) {
+    public DisplayResultsEvent(int numWrongWords, HashMap<String, Object> wrongWords, int numWordsInRawInput, int numInvalidWords) {
         this.numWrongWords = numWrongWords;
         this.wrongWords = wrongWords;
         this.numWordsInRawInput = numWordsInRawInput;
+        this.numInvalidWords = numInvalidWords;
+    }
+
+    public int getNumInvalidWords() {
+        return numInvalidWords;
+    }
+
+    public void setNumInvalidWords(int numInvalidWords) {
+        this.numInvalidWords = numInvalidWords;
     }
 
     public int getNumWordsInRawInput() {

@@ -47,6 +47,7 @@ public class ScoreResultFragment extends BaseFragment {
     public void onEventBackgroundThread(CheckWordsFromAPIEvent checkWordsFromAPIEvent) {
 
         int numWordInRawInput = Util.countNumWords(checkWordsFromAPIEvent.getWords());
+        int numInvalidWords = Util.countInvalidWords(checkWordsFromAPIEvent.getWords(),checkWordsFromAPIEvent.getStartLetter());
         String cleanedWords = Util.stripInvalidWords(checkWordsFromAPIEvent.getWords(), checkWordsFromAPIEvent.getStartLetter());
 
         OkHttpClient client = new OkHttpClient();
@@ -63,11 +64,11 @@ public class ScoreResultFragment extends BaseFragment {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            EventBus.getDefault().post(new ResultFetchedEvent(response.body().string(), "", numWordInRawInput));
+            EventBus.getDefault().post(new ResultFetchedEvent(response.body().string(), "", numWordInRawInput, numInvalidWords));
 
         }catch (IOException e){
             Log.e(TAG, e.getMessage());
-            EventBus.getDefault().post(new ResultFetchedEvent("", e.getMessage(), numWordInRawInput));
+            EventBus.getDefault().post(new ResultFetchedEvent("", e.getMessage(), numWordInRawInput, numInvalidWords));
         }
 
     }
@@ -98,7 +99,7 @@ public class ScoreResultFragment extends BaseFragment {
 
             Log.d(TAG, wrongWords.toString());
 
-            EventBus.getDefault().post(new DisplayResultsEvent(numWrongWords, wrongWords, r.getNumWordsInRawInput()));
+            EventBus.getDefault().post(new DisplayResultsEvent(numWrongWords, wrongWords, r.getNumWordsInRawInput(), r.getNumInvalidWords()));
         }
 
     }

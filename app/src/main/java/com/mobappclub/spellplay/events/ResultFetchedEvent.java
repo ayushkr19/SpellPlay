@@ -8,11 +8,21 @@ public class ResultFetchedEvent {
     private String result;
     private String error;
     private int numWordsInRawInput;
+    private int numInvalidWords;
 
-    public ResultFetchedEvent(String result, String error, int numWordsInRawInput) {
+    public ResultFetchedEvent(String result, String error, int numWordsInRawInput, int numInvalidWords) {
         this.result = result;
         this.error = error;
         this.numWordsInRawInput = numWordsInRawInput;
+        this.numInvalidWords = numInvalidWords;
+    }
+
+    public int getNumInvalidWords() {
+        return numInvalidWords;
+    }
+
+    public void setNumInvalidWords(int numInvalidWords) {
+        this.numInvalidWords = numInvalidWords;
     }
 
     public int getNumWordsInRawInput() {
