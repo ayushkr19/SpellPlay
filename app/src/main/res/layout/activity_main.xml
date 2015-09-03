@@ -1,31 +1,42 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/include_main" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.mobappclub.spellplay.MainActivityFragment"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            tools:layout="@layout/fragment_main" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <fragment
-            android:id="@+id/fragment2"
-            android:name="com.mobappclub.spellplay.ScoreResultFragment"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2"
-            tools:layout="@layout/fragment_score_result" />
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.mobappclub.spellplay.MainActivityFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                tools:layout="@layout/fragment_main" />
 
-    </LinearLayout>
-</ScrollView>
+            <fragment
+                android:id="@+id/fragment2"
+                android:name="com.mobappclub.spellplay.ScoreResultFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                tools:layout="@layout/fragment_score_result" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
 
 
 

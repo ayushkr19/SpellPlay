@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.mobappclub.spellplay.events.CheckWordsFromAPIEvent;
 import com.mobappclub.spellplay.events.FetchHighScoresEvent;
 import com.mobappclub.spellplay.events.HighScoreFetchedEvent;
 import com.mobappclub.spellplay.gson.HighScoreModel;
@@ -45,49 +46,7 @@ public class HighScoreFragment extends BaseFragment {
         EventBus.getDefault().post(new FetchHighScoresEvent(Constants.FETCH_HIGH_SCORES));
     }
 
-    public void onEventBackgroundThread(FetchHighScoresEvent f){
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(f.getUrl())
-                .addHeader("Accept", "application/json")
-                .build();
-
-        try {
-            Response response  = client.newCall(request).execute();
-            String jsonString = response.body().string();
-
-
-            Gson gson = new Gson();
-            HighScoreModel highScoreModel = gson.fromJson(jsonString, HighScoreModel.class);
-
-            EventBus.getDefault().post(new HighScoreFetchedEvent(highScoreModel));
-        } catch (IOException e) {
-            //TODO: Fix Log Tag
-            Log.e(TAG, e.getMessage());
-        }
-    }
-
-    public void onEventMainThread(HighScoreFetchedEvent h){
-
-        TextView tv_high_scores = (TextView) getActivity().findViewById(R.id.tv_high_scores);
-
-        HighScoreModel highScoresModel = h.getHighScoreModel();
-        Log.d(TAG, h.getHighScoreModel().toString());
-        Log.d(TAG, h.getHighScoreModel().getResults().toString());
-        Log.d(TAG, h.getHighScoreModel().getNext() + "");
-        Log.d(TAG, h.getHighScoreModel().getPrevious() + "");
-        Log.d(TAG, h.getHighScoreModel().getCount() + "");
-
-        String highScores = "";
-        int i = 1;
-        for(IndividualScoreModel score : highScoresModel.getResults()){
-
-            highScores += ("" + i + ".          " + score.getFinal_score() + "\n\n");
-            i++;
-        }
-
-        tv_high_scores.setText(highScores);
+    public void onEvent(CheckWordsFromAPIEvent c){
 
     }
 

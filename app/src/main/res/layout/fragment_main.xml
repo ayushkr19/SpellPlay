@@ -33,12 +33,17 @@
             <TextView android:text="Press start."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/less_margin"
+                android:layout_gravity="center"
                 android:id="@+id/tv_counter"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_start"
+                android:layout_margin="@dimen/less_margin"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_gravity="center"
                 android:text="Start"
                 />
 
@@ -46,7 +51,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:ems="10"
                 android:enabled="false"
                 android:id="@+id/et_text"
                 android:hint="Enter words as fast as you can" />
