@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mobappclub.spellplay.events.CheckWordsFromAPIEvent;
+import com.mobappclub.spellplay.events.SetCurrentTabToScoresEvent;
 
 import java.nio.charset.CharacterCodingException;
 import java.util.Random;
@@ -90,6 +91,7 @@ public class MainActivityFragment extends BaseFragment {
                 }
 
                 EventBus.getDefault().post(new CheckWordsFromAPIEvent(textt, randomCharacter));
+                EventBus.getDefault().post(new SetCurrentTabToScoresEvent());
 
             }
         }.start();
@@ -103,6 +105,5 @@ public class MainActivityFragment extends BaseFragment {
         return  rand.nextInt((max - min) + 1) + min;
 
     }
-
 
 }
