@@ -51,8 +51,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:layout_margin="@dimen/less_margin"
-                android:ems="10"
                 android:enabled="false"
                 android:id="@+id/et_text"
                 android:hint="Enter words as fast as you can" />
