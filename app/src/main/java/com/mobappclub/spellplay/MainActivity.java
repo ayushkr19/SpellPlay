@@ -110,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void onEventMainThread(SetCurrentTabToScoresEvent s){
+        viewPager.setCurrentItem(1, true);
+    }
+
     public void onEventBackgroundThread(CheckWordsFromAPIEvent checkWordsFromAPIEvent) {
 
         int numWordInRawInput = Util.countNumWords(checkWordsFromAPIEvent.getWords());
