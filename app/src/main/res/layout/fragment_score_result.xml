@@ -30,6 +30,9 @@
                 android:id="@+id/tv_result"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold"
                 android:text="Your results will appear here" />
         </LinearLayout>
 

@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         MainFragmentAdapter mainFragmentAdapter = MainFragmentAdapter.newInstance(getSupportFragmentManager());
         viewPager.setAdapter(mainFragmentAdapter);
+        tabLayout.setSelectedTabIndicatorHeight(10);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setOffscreenPageLimit(3);
     }

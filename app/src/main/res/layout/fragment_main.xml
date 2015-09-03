@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/less_margin"
                 android:layout_gravity="center"
+                android:textStyle="bold"
                 android:id="@+id/tv_counter"/>
 
             <Button
